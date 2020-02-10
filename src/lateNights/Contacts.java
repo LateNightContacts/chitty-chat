@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class Contacts {
@@ -87,12 +88,18 @@ public class Contacts {
         entry = new Contact(contName, phoneNumber, email, snapChat);
         contactBook.add(entry);
         totalContacts++;
-        System.out.println(totalContacts);
+
 
         try {
             Path contactFile = Paths.get("Contacts Book", "contacts.txt");
-            for (int i = 0; i < totalContacts; i++) {
-                Files.writeString(contactFile, contactBook.get(i).getContactName());
+            for (int i = 0; i < totalContacts; i = totalContacts + 1) {
+                Files.writeString(contactFile,
+                        contactBook.get(i).getContactName() +" | "+
+                             contactBook.get(i).getPhoneNumber() +" | "+
+                             contactBook.get(i).getEmail() +" | "+
+                             contactBook.get(i).getSnapChat() +
+                             System.lineSeparator(),
+                             StandardOpenOption.APPEND);
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();

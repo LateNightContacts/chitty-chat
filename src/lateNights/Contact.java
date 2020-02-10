@@ -20,7 +20,9 @@ public class Contact extends Contacts {
     public String getContactName() { return this.contactName; }
     public String getEmail() { return this.email; }
     public String getPhoneNumber() { return this.phoneNumber; }
-//    SETTERS
+    public String getSnapChat() { return this.snapChat; }
+
+    //    SETTERS
     public void setContactName(String contactName) { this.contactName = contactName; }
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
     public void setEmail(String email) { this.email = email; }
