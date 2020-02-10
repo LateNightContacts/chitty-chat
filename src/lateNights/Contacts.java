@@ -1,30 +1,19 @@
 package lateNights;
 
-import jdk.jshell.spi.ExecutionControl;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class Contacts {
-
-    public static List<Contact> contactBook = new ArrayList<>();
+    public List<Contact> contactBook;
+    private int totalContacts = 0;
 
     public static void main(String[] args) {
-
-        contactsFile();
-        writeContact();
-    }
-
-
-
-    static void contactsFile(){
+        Contacts contactsApp = new Contacts();
         String directory = "Contacts Book";
         String filename = "contacts.txt";
 
@@ -32,25 +21,33 @@ public class Contacts {
         System.out.println(contactsDirectory.toAbsolutePath());
         Path contactsFile = Paths.get(directory, filename);
 
-        try{
-            if(Files.notExists(contactsDirectory)){
+        contactsApp.contactsFile(contactsDirectory, contactsFile);
+        contactsApp.readContact(contactsFile);
+        contactsApp.writeContact();
+    }
+
+    public Contacts() {
+        this.contactBook = new ArrayList<>();
+    }
+
+    public void contactsFile(Path contactsDirectory, Path contactsFile) {
+        try {
+            if (Files.notExists(contactsDirectory)) {
                 Files.createDirectories(contactsDirectory);
                 System.out.println("Contacts directory created.");
             }
-            if(!Files.exists(contactsFile)){
+            if (!Files.exists(contactsFile)) {
                 Files.createFile(contactsFile);
                 System.out.println("Contacts file created.");
             }
-        } catch (IOException ioe){
+        } catch (IOException ioe) {
             ioe.printStackTrace();
         }
     }
 
-
-
-    static void readContact(){
+    public void readContact(Path contactsFile) {
         try {
-            File myCont = new File ("contacts.txt");
+            File myCont = new File(contactsFile.toString());
             Scanner contReader = new Scanner(myCont);
             while (contReader.hasNextLine()) {
                 String contData = contReader.nextLine();
@@ -64,24 +61,21 @@ public class Contacts {
 
     }
 
-
-
-    public static void writeContact(){
-//        HashMap<String, Contact> contactBook = new HashMap<>();
+    public void writeContact() {
         Contact newContact = new Contact();
         Scanner scanner = new Scanner(System.in);
 
-    //======CONTACT INFO======//
+        //======CONTACT INFO======//
         //   SETS NAME
         System.out.println("New contacts Name: ");
         String contName = scanner.nextLine();
         newContact.setContactName(contName);
         //  SETS PHONE NUMBER
-        System.out.println(contName + "'s phone number?");
+        System.out.println("What's " + contName + "'s phone number?");
         String phoneNumber = scanner.nextLine();
         newContact.setPhoneNumber(phoneNumber);
         //  SETS EMAIL
-        System.out.println("What about "+ contName +"'s email?");
+        System.out.println("What about " + contName + "'s email?");
         String email = scanner.nextLine();
         newContact.setEmail(email);
         //  SETS SNAPCHAT
@@ -89,17 +83,20 @@ public class Contacts {
         String snapChat = scanner.nextLine();
         newContact.setSnapChat(snapChat);
 
-        contactBook.add(newContact);
+        Contact entry;
+        entry = new Contact(contName, phoneNumber, email, snapChat);
+        contactBook.add(entry);
+        totalContacts++;
+        System.out.println(totalContacts);
+
         try {
             Path contactFile = Paths.get("Contacts Book", "contacts.txt");
-            Files.writeString(contactFile, contactBook.get(0).getContactName());
-        } catch (IOException ioe){
+            for (int i = 0; i < totalContacts; i++) {
+                Files.writeString(contactFile, contactBook.get(i).getContactName());
+            }
+        } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-
-
-
-
     }
 
 
