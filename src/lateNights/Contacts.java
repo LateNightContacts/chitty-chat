@@ -1,5 +1,7 @@
 package lateNights;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,11 +9,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 public class Contacts {
 
     public static void main(String[] args) {
-        HashMap<String, Contact> contacts = new HashMap<>();
+
         contactsFile();
 
     }
@@ -40,8 +43,25 @@ public class Contacts {
         }
     }
 
+    static void readContact(){
+        try {
+            File myCont = new File ("contacts.txt");
+            Scanner contReader = new Scanner(myCont);
+            while (contReader.hasNextLine()) {
+                String contData = contReader.nextLine();
+                System.out.println(contData);
+            }
+            contReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An Error Occurred");
+            e.printStackTrace();
+        }
+
+    }
+
     static void writeContact(){
-        List<String> contact = new ArrayList<>();
+//        List<String> contact = new ArrayList<>();
+        HashMap<String, Contact> contacts = new HashMap<>();
 
     }
 
