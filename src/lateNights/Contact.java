@@ -51,4 +51,5 @@ public class Contact extends Contacts {
     public void setSnapChat(String snapChat) {
         this.snapChat = snapChat;
     }
+
 }
