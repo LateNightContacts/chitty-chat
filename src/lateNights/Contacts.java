@@ -46,6 +46,7 @@ public class Contacts {
         }
     }
 
+
     public void readContact(Path contactsFile) {
         try {
             File myCont = new File(contactsFile.toString());
@@ -61,6 +62,7 @@ public class Contacts {
         }
     }
 
+    // WRITE TO CONTACT BOOK
     public void writeContact() {
         Contact newContact = new Contact();
         Scanner scanner = new Scanner(System.in);
@@ -117,8 +119,6 @@ public class Contacts {
 
     public void searchContactBook(){
     }
-
-
 }
 
 
