@@ -100,11 +100,11 @@ public class Contacts {
                              contactBook.get(i).getSnapChat() +
                              System.lineSeparator(),
                              StandardOpenOption.APPEND);
-            }
+
+                }
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
     }
-
 
 }
