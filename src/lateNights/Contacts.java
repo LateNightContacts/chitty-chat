@@ -11,7 +11,7 @@ import java.util.*;
 
 public class Contacts {
     public List<Contact> contactBook;
-    private int totalContacts = 0;
+//    private int totalContacts = 0;
 
     public static void main(String[] args) {
         Contacts contactsApp = new Contacts();
@@ -59,7 +59,6 @@ public class Contacts {
             System.out.println("An Error Occurred");
             e.printStackTrace();
         }
-
     }
 
     public void writeContact() {
@@ -84,27 +83,49 @@ public class Contacts {
         String snapChat = scanner.nextLine();
         newContact.setSnapChat(snapChat);
 
+        //  ADDING USER INPUTS TO NEW CONTACT INSTANCE
         Contact entry;
         entry = new Contact(contName, phoneNumber, email, snapChat);
         contactBook.add(entry);
-        totalContacts++;
+//        totalContacts++;
 
-
+        //  WRITE NEW CONTACT TO FILE
         try {
             Path contactFile = Paths.get("Contacts Book", "contacts.txt");
-            for (int i = 0; i < totalContacts; i = totalContacts + 1) {
-                Files.writeString(contactFile,
-                        contactBook.get(i).getContactName() +" | "+
-                             contactBook.get(i).getPhoneNumber() +" | "+
-                             contactBook.get(i).getEmail() +" | "+
-                             contactBook.get(i).getSnapChat() +
+//            for (int i = 0; i < totalContacts; i = totalContacts + 1) {
+                Files.writeString(contactFile, contactBook.get(0).toString() +
                              System.lineSeparator(),
                              StandardOpenOption.APPEND);
-            }
+//            }
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
     }
 
+    public void viewAllContacts(String directory, String filename) {
+        try {
+            Path contactsPath = Paths.get(directory, filename);
+            List<String> contactsBook = Files.readAllLines(contactsPath);
+
+            for (int i = 0; i < contactsBook.size(); i++) {
+                System.out.println((i + 1) + ": " + contactsBook.get(i));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void searchContactBook(){
+    }
+
 
 }
+
+
+
+
+
+//                            contactBook.get(i).getContactName() +" | "+
+//            contactBook.get(i).getPhoneNumber() +" | "+
+//            contactBook.get(i).getEmail() +" | "+
+//            contactBook.get(i).getSnapChat() +

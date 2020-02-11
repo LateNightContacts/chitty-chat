@@ -16,6 +16,10 @@ public class Contact extends Contacts {
         this.snapChat = snapChat;
     }
 
+    public String toString(){
+        return this.contactName +" | "+ this.phoneNumber +" | "+ this.email +" | "+ this.snapChat;
+    }
+
 //    GETTERS
     public String getContactName() { return this.contactName; }
     public String getEmail() { return this.email; }

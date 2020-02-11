@@ -1,1 +1,4 @@
 charlie | 3456782 | charlie2@gmail.com | snap
+charlie2 | 1234556 | three@gmail.com | no
+gaston | 78958743 | gaston@gmail.com | yes
+NEW EEMP | 38947656 | EEMP@GMAIL.COM | SNAP
