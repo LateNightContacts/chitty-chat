@@ -28,6 +28,7 @@ public class Contact extends Contacts {
     public String getEmail() { return this.email; }
     public String getPhoneNumber() { return this.phoneNumber; }
     public String getSnapChat() { return this.snapChat; }
+//    public String showMenu() {return this.showMenu()}
 
 
 
@@ -36,5 +37,6 @@ public class Contact extends Contacts {
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
     public void setEmail(String email) { this.email = email; }
     public void setSnapChat(String snapChat) { this.snapChat = snapChat; }
+
 
 }

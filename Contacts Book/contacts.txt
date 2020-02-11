@@ -2,3 +2,6 @@ charlie | 3456782 | charlie2@gmail.com | snap
 charlie2 | 1234556 | three@gmail.com | no
 gaston | 78958743 | gaston@gmail.com | yes
 NEW EEMP | 38947656 | EEMP@GMAIL.COM | SNAP
+gt | 323232323223 | gt@gmail.com | gt
+gt | 423423423 | gt@gmaillll,com | fdsf
+gt | 3423423423423 | gt^terter | trter
