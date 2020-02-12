@@ -24,10 +24,11 @@ public class Contacts {
         Path contactsFile = Paths.get(directory, filename);
 
         contactsApp.contactsFile(contactsDirectory, contactsFile);
-
+        contactsApp.loadContacts(contactsFile);
         do {
             contactsApp.contactsMenu(directory, filename);
-        } while(switcher);
+        } while (switcher);
+
 
     }
 
@@ -35,6 +36,22 @@ public class Contacts {
         this.contactBook = new ArrayList<>();
     }
 
+    public void loadContacts(Path contactsFile) {
+        try {
+            List<String> readLines = Files.readAllLines(contactsFile);
+            String[] contactDetails;
+            for (int i = 0; i < readLines.size(); i++) {
+                contactDetails = readLines.get(i).split(", ");
+                this.contactBook.add(new Contact(contactDetails[0], contactDetails[1], contactDetails[2],
+                        contactDetails[3]));
+            }
+
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+//  CREATE FILE IF NOT EXISTING
     public void contactsFile(Path contactsDirectory, Path contactsFile) {
         try {
             if (Files.notExists(contactsDirectory)) {
@@ -50,24 +67,22 @@ public class Contacts {
         }
     }
 
-
-    public void readContact(Path contactsFile) {
+// WRITE TO CONTACT BOOK
+    public void writeToFile() {
         try {
-            File myCont = new File(contactsFile.toString());
-            Scanner contReader = new Scanner(myCont);
-            while (contReader.hasNextLine()) {
-                String contData = contReader.nextLine();
-                System.out.println(contData);
+            Path contactFile = Paths.get("Contacts Book", "contacts.txt");
+            Files.writeString(contactFile, "", StandardOpenOption.TRUNCATE_EXISTING);
+            for (int i = 0; i < this.contactBook.size(); i++) {
+                Files.writeString(contactFile, contactBook.get(i).toString() + System.lineSeparator(),
+                        StandardOpenOption.APPEND);
             }
-            contReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An Error Occurred");
-            e.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
     }
 
-// WRITE TO CONTACT BOOK
-    public void writeContact() {
+// ADD NEW CONTACT
+    public void addContact(){
         Contact newContact = new Contact();
         Scanner scanner = new Scanner(System.in);
 
@@ -93,48 +108,31 @@ public class Contacts {
         Contact entry;
         entry = new Contact(contName, phoneNumber, email, snapChat);
         contactBook.add(entry);
-
-        //  WRITE NEW CONTACT TO FILE
-        try {
-            Path contactFile = Paths.get("Contacts Book", "contacts.txt");
-            Files.writeString(contactFile, contactBook.get(0).toString() +
-                            System.lineSeparator(),
-                    StandardOpenOption.APPEND);
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
     }
 
 // VIEW ALL CONTACTS
-    public void viewAllContacts(String directory, String filename) {
-        try {
-            Path contactsPath = Paths.get(directory, filename);
-            List<String> contactsBook = Files.readAllLines(contactsPath);
-
-            for (int i = 0; i < contactsBook.size(); i++) {
-                System.out.println((i + 1) + ": " + contactsBook.get(i));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void viewAllContacts() {
+        for (int i = 0; i < this.contactBook.size(); i++) {
+            System.out.println((i + 1) + ": " + this.contactBook.get(i));
         }
     }
 
 //  SEARCH CONTACTS BOOK
-    public void searchContactBook(String file) {
+    public void searchContactBook() {
         Scanner contactSearch = new Scanner(System.in);
         System.out.println("\nSearch address book: ");
         String userSearch = contactSearch.nextLine();
+        System.out.println(userSearch);
 
-
-        for (int i = 0; i < contactBook.size() ; i++) {
-            if (contactBook.get(i).getContactName().contains(userSearch)){
-
+        for (int i = 0; i < contactBook.size(); i++) {
+            if (contactBook.get(i).getContactName().contains(userSearch)) {
+                System.out.println(contactBook.get(i).toString());
             }
         }
     }
 
 //  CONTACTS MENU
-    public void contactsMenu(String directory, String file){
+    public void contactsMenu(String directory, String file) {
         Scanner sc = new Scanner(System.in);
         System.out.println("\n\tAddress Book Menu");
         System.out.println("\t-----------------");
@@ -146,25 +144,24 @@ public class Contacts {
         System.out.print("\n\tType your choice: ");
         char choice = sc.nextLine().toUpperCase().charAt(0);
 
-        while ((choice != '1') && (choice != '2') && (choice != '3') && (choice != '4') && (choice != '5')) {
+        while ((choice != '1') && (choice != '2') && (choice != '3') && (choice != '4')) {
             System.out.println("Invalid choice!  Please select Add, Delete, Modify, Search or Quit: ");
             choice = sc.nextLine().toUpperCase().charAt(0);
         }
         switch (choice) {
             case '1':
-                viewAllContacts(directory, file);
+                viewAllContacts();
                 break;
             case '2':
-                writeContact();
+                addContact();
                 break;
             case '3':
+                searchContactBook();
                 break;
             case '4':
-                searchContactBook(file);
-                break;
-            case '5':
                 switcher = false;
                 System.out.println("Have a nice day!");
+                writeToFile();
                 System.exit(0);
                 break;
             default:
@@ -172,12 +169,3 @@ public class Contacts {
     }
 
 }
-
-
-
-
-
-//                            contactBook.get(i).getContactName() +" | "+
-//            contactBook.get(i).getPhoneNumber() +" | "+
-//            contactBook.get(i).getEmail() +" | "+
-//            contactBook.get(i).getSnapChat() +
